@@ -1,0 +1,5 @@
+build-essential
+curl
+software-properties-common
+git
+python3-opencv
