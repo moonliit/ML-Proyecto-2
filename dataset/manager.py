@@ -57,13 +57,8 @@ class DatasetManager:
         """
         Función que carga los dataframes con movieId y las 512 dimensiones de HSV
         """
-        full_feats_df = pd.read_pickle(FEATS_FILE)
-
-        # trim feats
-        NUM_FEATS = 562
-        useful_feats = [f"feat_{i}" for i in range(NUM_FEATS)]
-        useful_feats.insert(0, "movieId")
-        feats_df = full_feats_df[useful_feats]
+        # feats df
+        feats_df = pd.read_pickle(FEATS_FILE)
 
         # movie ids
         movie_ids = set(feats_df["movieId"])
