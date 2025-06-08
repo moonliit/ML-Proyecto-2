@@ -225,7 +225,7 @@ class StreamlitHandler:
         recomendaciones = movie_df[["movieId", "title"]].to_numpy()
 
         st.subheader("Peliculas recomendadas:")
-        st.write("Recomendaciones generadas por proximidada en el subespacio")
+        st.write("Recomendaciones generadas por proximidad en el subespacio")
         cols1 = st.columns(k//2)
         cols2 = st.columns(k//2)
 

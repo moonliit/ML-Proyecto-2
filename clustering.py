@@ -1,6 +1,11 @@
 from scipy.spatial.distance import pdist, squareform
 import numpy as np
 
+"""
+Estas clases no son utilizadas en el proyecto, dado a que son ineficientes por falta de optimizacion para la data.
+Sin embargo, replican el mismo funcionamiento que las implementaciones de scikit-learn.
+"""
+
 class KMeansManual:
     def __init__(self, n_clusters=2, max_iter=100, random_state=42, init="kmeans++"):
         self.k = n_clusters
@@ -92,62 +97,3 @@ class AgglomerativeManual:
     def fit_predict(self, X):
         self.fit(X)
         return self.labels_
-    
-if __name__ == "__main__":
-    from sklearn.datasets import make_moons
-    from sklearn.metrics import silhouette_score
-    from sklearn.cluster import KMeans, AgglomerativeClustering
-    import matplotlib.pyplot as plt
-
-    # Generar datos complejos
-    X, _ = make_moons(n_samples=300, noise=0.1, random_state=42)
-    n_clusters = 6
-
-    # Modelos manuales
-    kmeans_manual = KMeansManual(n_clusters=n_clusters, random_state=42)
-    agglo_manual = AgglomerativeManual(n_clusters=n_clusters, linkage='single')
-
-    labels_kmeans_manual = kmeans_manual.fit_predict(X)
-    labels_agglo_manual = agglo_manual.fit_predict(X)
-
-    # Modelos sklearn
-    kmeans_sklearn = KMeans(n_clusters=n_clusters, random_state=42)
-    agglo_sklearn = AgglomerativeClustering(n_clusters=n_clusters, linkage='single')
-
-    labels_kmeans_sklearn = kmeans_sklearn.fit_predict(X)
-    labels_agglo_sklearn = agglo_sklearn.fit_predict(X)
-
-    # Silhouette Scores
-    sil_scores = {
-        "KMeansManual": silhouette_score(X, labels_kmeans_manual),
-        "AggloManual": silhouette_score(X, labels_agglo_manual),
-        "KMeans (sklearn)": silhouette_score(X, labels_kmeans_sklearn),
-        "Agglo (sklearn)": silhouette_score(X, labels_agglo_sklearn),
-    }
-
-    # Plot
-    plt.figure(figsize=(12, 8))
-
-    titles = [
-        f"KMeansManual (sil={sil_scores['KMeansManual']:.2f})",
-        f"AggloManual (sil={sil_scores['AggloManual']:.2f})",
-        f"KMeans (sklearn) (sil={sil_scores['KMeans (sklearn)']:.2f})",
-        f"Agglo (sklearn) (sil={sil_scores['Agglo (sklearn)']:.2f})",
-    ]
-
-    label_sets = [
-        labels_kmeans_manual,
-        labels_agglo_manual,
-        labels_kmeans_sklearn,
-        labels_agglo_sklearn,
-    ]
-
-    for i in range(4):
-        plt.subplot(2, 2, i + 1)
-        plt.scatter(X[:, 0], X[:, 1], c=label_sets[i], cmap='viridis', s=30)
-        plt.title(titles[i])
-        plt.xticks([])
-        plt.yticks([])
-
-    plt.tight_layout()
-    plt.savefig("grafico.png")

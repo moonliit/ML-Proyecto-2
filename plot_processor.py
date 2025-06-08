@@ -88,11 +88,11 @@ class PlotProcessor:
         elif self.reduction_method == "svd":
             X_full = self.svd50.transform(X_sub)
         elif self.reduction_method == "lda":
-            X_full = self.lda_full.transform(X_sub, self.y_train)
+            X_full = self.lda_full.transform(X_sub)
         elif self.reduction_method == "pca+lda":
             G = self.lda_full.n_components
             X_pca = self.pca50.transform(X_sub)
-            X_lda = self.lda_full.transform(X_sub, self.y_train)
+            X_lda = self.lda_full.transform(X_sub)
             X_full = np.hstack([X_lda, X_pca[:, G:]])
         return X_full
 
